@@ -1,20 +1,18 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import CategoriesScreen from './screen/CategoriesScreen';
+import { setBackgroundColorAsync } from 'expo-system-ui';
 
 export default function App() {
+  setBackgroundColorAsync('black');
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <>
+      <StatusBar style="light"></StatusBar>
+      <CategoriesScreen />
+    </>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+  container: {},
 });
