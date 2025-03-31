@@ -3,14 +3,16 @@ import { Meal } from '../models/Meal';
 
 type MealItemProps = {
   meal: Meal;
+  pressHandler: () => void;
 };
 const MealItem: React.FC<MealItemProps> = (props: MealItemProps) => {
-  const { meal } = props;
+  const { meal, pressHandler } = props;
   return (
     <View key={meal.id} style={styles.mealItem}>
       <Pressable
         android_ripple={{ color: '#ccc' }}
         style={({ pressed }) => (pressed ? styles.buttonPressed : null)}
+        onPress={pressHandler}
       >
         <View style={styles.innerContainer}>
           <Image source={{ uri: meal.imageUrl }} style={styles.image} />

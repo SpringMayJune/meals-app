@@ -6,10 +6,13 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import MealsScreen from './screen/MealsScreen';
 import { Category } from './models/Category';
+import MealDetailScreen from './components/MealDetailScreen';
+import { Meal } from './models/Meal';
 
 export type RootStackParamList = {
   CategoriesScreen: undefined;
   MealsScreen: { category: Category };
+  MealDetailScreen: { meal: Meal };
 };
 export default function App() {
   setBackgroundColorAsync('black');
@@ -25,7 +28,15 @@ export default function App() {
           component={MealsScreen}
           options={{
             title: 'Meals',
-            headerBackTitle: 'Back', // ← 여기!
+            headerBackTitle: 'Back',
+          }}
+        />
+        <Stack.Screen
+          name="MealDetailScreen"
+          component={MealDetailScreen}
+          options={{
+            title: 'About the Meal',
+            headerBackTitle: 'Back',
           }}
         />
       </Stack.Navigator>
