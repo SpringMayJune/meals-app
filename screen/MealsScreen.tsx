@@ -6,6 +6,7 @@ import { mockMeals } from '../data/dummy-data';
 import MealItem from '../components/MealItem';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Meal } from '../models/Meal';
+import { useEffect } from 'react';
 
 type MealsScreenRouteProp = RouteProp<RootStackParamList, 'MealsScreen'>;
 type NavigationProp = StackNavigationProp<RootStackParamList, 'MealDetailScreen'>;
@@ -16,6 +17,10 @@ const MealsScreen = () => {
   const mealsInSelectedCategory = mockMeals.filter((meal) =>
     meal.categoryIds.includes(category.id),
   );
+
+  useEffect(() => {
+    navigation.setOptions({ title: category.title });
+  }, [category, navigation]);
 
   const onPressHandler = (item: Meal) => {
     navigation.navigate('MealDetailScreen', {

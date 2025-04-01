@@ -1,5 +1,6 @@
 import { View, Image, Text, Pressable, StyleSheet, Platform } from 'react-native';
 import { Meal } from '../models/Meal';
+import MealDetails from './MealDetails';
 
 type MealItemProps = {
   meal: Meal;
@@ -18,11 +19,7 @@ const MealItem: React.FC<MealItemProps> = (props: MealItemProps) => {
           <Image source={{ uri: meal.imageUrl }} style={styles.image} />
           <View style={styles.descriptionContainer}>
             <Text style={styles.titleText}>{meal.title}</Text>
-            <View style={styles.detailContainer}>
-              <Text style={styles.detailText}>{meal.duration} m</Text>
-              <Text style={styles.detailText}>{meal.complexity.toUpperCase()}</Text>
-              <Text style={styles.detailText}>{meal.affordability.toUpperCase()}</Text>
-            </View>
+            <MealDetails meal={meal} />
           </View>
         </View>
       </Pressable>

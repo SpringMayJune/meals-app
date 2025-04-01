@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import CategoriesScreen from './screen/CategoriesScreen';
 import { setBackgroundColorAsync } from 'expo-system-ui';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 import MealsScreen from './screen/MealsScreen';
 import { Category } from './models/Category';
@@ -16,27 +16,40 @@ export type RootStackParamList = {
 };
 export default function App() {
   setBackgroundColorAsync('black');
-  const Stack = createStackNavigator<RootStackParamList>();
+  const Stack = createNativeStackNavigator<RootStackParamList>();
 
   return (
     <NavigationContainer>
-      <StatusBar style="dark"></StatusBar>
-      <Stack.Navigator>
-        <Stack.Screen name="CategoriesScreen" component={CategoriesScreen} />
+      <StatusBar style="light"></StatusBar>
+      <Stack.Navigator
+        screenOptions={{
+          headerStyle: { backgroundColor: '#351401' },
+          headerTintColor: 'white',
+          contentStyle: { backgroundColor: '#3f2f25' },
+        }}
+      >
+        <Stack.Screen
+          name="CategoriesScreen"
+          component={CategoriesScreen}
+          options={{
+            title: 'All Categories',
+          }}
+        />
         <Stack.Screen
           name="MealsScreen"
           component={MealsScreen}
-          options={{
-            title: 'Meals',
-            headerBackTitle: 'Back',
-          }}
+          // options={({ route, navigation }) => {
+          //   const categoryTitle = route.params.category.title;
+          //   return {
+          //     title: categoryTitle,
+          //   };
+          // }}
         />
         <Stack.Screen
           name="MealDetailScreen"
           component={MealDetailScreen}
           options={{
             title: 'About the Meal',
-            headerBackTitle: 'Back',
           }}
         />
       </Stack.Navigator>

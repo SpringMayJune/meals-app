@@ -1,59 +1,72 @@
-import { Text, View, Image, StyleSheet } from 'react-native';
+import { Text, View, Image, StyleSheet, ScrollView } from 'react-native';
 import { Meal } from '../models/Meal';
-import { RouteProp, useRoute } from '@react-navigation/native';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { useEffect } from 'react';
+import Label from './ui/Label';
+import MealDetails from './MealDetails';
+import Subtitle from './ui/Subtitle';
 
 type MealDetailScreenRouteProp = RouteProp<RootStackParamList, 'MealDetailScreen'>;
+type NavigationProp = StackNavigationProp<RootStackParamList, 'MealDetailScreen'>;
 const MealDetailScreen = () => {
   const route = useRoute<MealDetailScreenRouteProp>();
+  const navigation = useNavigation<NavigationProp>();
   const { meal } = route.params;
+  useEffect(() => {
+    navigation.setOptions({ title: meal.title });
+  }, [meal, navigation]);
+
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.rootContainer}>
       <Image source={{ uri: meal.imageUrl }} style={styles.image} />
       <Text style={styles.titleText}> {meal.title} </Text>
-      <View style={styles.detailContainer}>
-        <Text style={styles.detailText}> {meal.duration} m</Text>
-        <Text style={styles.detailText}> {meal.complexity.toUpperCase()} </Text>
-        <Text style={styles.detailText}> {meal.affordability.toUpperCase()} </Text>
+      <MealDetails meal={meal} style={styles.detailText} />
+      <View style={styles.outerContainer}>
+        <View style={styles.labelContainer}>
+          <Subtitle subtitle="INGREDIENTS" />
+          {meal.ingredients.length === 0 ? (
+            <Text> There are no ingredients </Text>
+          ) : (
+            <Label labelList={meal.ingredients} />
+          )}
+          <Subtitle subtitle="STEPS" />
+          {meal.steps.length === 0 ? (
+            <Text> There are no steps </Text>
+          ) : (
+            <Label labelList={meal.steps} />
+          )}
+        </View>
       </View>
-      <View style={styles.descriptionContainer}>
-        <Text> INGREDIENTS </Text>
-      </View>
-      <View style={styles.descriptionContainer}>
-        <Text> STEPS </Text>
-      </View>
-    </View>
+    </ScrollView>
   );
 };
 
 export default MealDetailScreen;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
+  rootContainer: {
+    marginBottom: 32,
   },
   image: {
     width: '100%',
-    height: 300,
+    height: 350,
   },
   titleText: {
-    fontSize: 18,
+    fontSize: 24,
     textAlign: 'center',
     fontWeight: 'bold',
-    padding: 8,
-  },
-  detailContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 8,
+    margin: 8,
+    color: 'white',
   },
   detailText: {
-    marginHorizontal: 4,
-    fontSize: 12,
+    color: 'white',
   },
-  descriptionContainer: {
-    flex: 1,
+  labelContainer: {
+    width: '80%',
+  },
+  outerContainer: {
     justifyContent: 'center',
     alignItems: 'center',
   },
