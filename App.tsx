@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Button } from 'react-native';
 import CategoriesScreen from './screen/CategoriesScreen';
 import { setBackgroundColorAsync } from 'expo-system-ui';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';

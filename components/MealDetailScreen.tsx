@@ -1,12 +1,13 @@
-import { Text, View, Image, StyleSheet, ScrollView } from 'react-native';
+import { Text, View, Image, StyleSheet, ScrollView, Button } from 'react-native';
 import { Meal } from '../models/Meal';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Label from './ui/Label';
 import MealDetails from './MealDetails';
 import Subtitle from './ui/Subtitle';
+import IconButton from './IconButton';
 
 type MealDetailScreenRouteProp = RouteProp<RootStackParamList, 'MealDetailScreen'>;
 type NavigationProp = StackNavigationProp<RootStackParamList, 'MealDetailScreen'>;
@@ -14,9 +15,25 @@ const MealDetailScreen = () => {
   const route = useRoute<MealDetailScreenRouteProp>();
   const navigation = useNavigation<NavigationProp>();
   const { meal } = route.params;
+  const [isButtonClicked, setIsButtonClicked] = useState<boolean>(false);
+  const headerButtonPressHandler = () => {
+    console.log('pressed!');
+    setIsButtonClicked((prev) => !prev);
+  };
+
   useEffect(() => {
-    navigation.setOptions({ title: meal.title });
-  }, [meal, navigation]);
+    navigation.setOptions({
+      headerRight: () => {
+        return (
+          <IconButton
+            icon="star"
+            color={isButtonClicked ? 'yellow' : 'white'}
+            handleOnPress={headerButtonPressHandler}
+          />
+        );
+      },
+    });
+  }, [headerButtonPressHandler, navigation]);
 
   return (
     <ScrollView style={styles.rootContainer}>
