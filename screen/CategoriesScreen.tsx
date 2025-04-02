@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
 import { StackNavigationProp } from '@react-navigation/stack';
 
-type NavigationProp = StackNavigationProp<RootStackParamList, 'CategoriesScreen'>;
+type NavigationProp = StackNavigationProp<RootStackParamList, 'Categories'>;
 const CategoriesScreen = () => {
   const navigation = useNavigation<NavigationProp>();
 
@@ -31,6 +31,7 @@ const CategoriesScreen = () => {
       renderItem={renderCategoryItem}
       numColumns={2}
       key={'fixed_2columns'}
+      contentContainerStyle={{ backgroundColor: '#3f2f25' }}
     />
   );
 };
