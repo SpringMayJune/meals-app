@@ -7,6 +7,7 @@ import MealItem from '../components/MealItem';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Meal } from '../models/Meal';
 import { useEffect } from 'react';
+import MealList from '../components/MealList';
 
 type MealsScreenRouteProp = RouteProp<RootStackParamList, 'MealsScreen'>;
 type NavigationProp = StackNavigationProp<RootStackParamList, 'MealDetailScreen'>;
@@ -27,26 +28,13 @@ const MealsScreen = () => {
       meal: item,
     });
   };
-  const renderMealItem = (item: ListRenderItemInfo<Meal>) => {
-    return <MealItem meal={item.item} pressHandler={() => onPressHandler(item.item)} />;
-  };
 
   return (
-    <View style={styles.container}>
-      <FlatList
-        data={mealsInSelectedCategory}
-        keyExtractor={(item) => item.id}
-        renderItem={renderMealItem}
-      />
-    </View>
+    <MealList
+      onPressHandler={(item: Meal) => onPressHandler(item)}
+      meals={mealsInSelectedCategory}
+    />
   );
 };
 
 export default MealsScreen;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-  },
-});

@@ -3,11 +3,12 @@ import { Meal } from '../models/Meal';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { useEffect, useState } from 'react';
-import Label from './ui/Label';
-import MealDetails from './MealDetails';
-import Subtitle from './ui/Subtitle';
-import IconButton from './IconButton';
+import { useContext, useEffect, useState } from 'react';
+import Label from '../components/ui/Label';
+import MealDetails from '../components/MealDetails';
+import Subtitle from '../components/ui/Subtitle';
+import IconButton from '../components/IconButton';
+import { FavoriteMealsContext } from '../contexts/FavoriteMealsContext';
 
 type MealDetailScreenRouteProp = RouteProp<RootStackParamList, 'MealDetailScreen'>;
 type NavigationProp = StackNavigationProp<RootStackParamList, 'MealDetailScreen'>;
@@ -15,10 +16,13 @@ const MealDetailScreen = () => {
   const route = useRoute<MealDetailScreenRouteProp>();
   const navigation = useNavigation<NavigationProp>();
   const { meal } = route.params;
-  const [isButtonClicked, setIsButtonClicked] = useState<boolean>(false);
-  const headerButtonPressHandler = () => {
-    console.log('pressed!');
-    setIsButtonClicked((prev) => !prev);
+  const { favoriteMeals, addFavorites, removeFavorites } = useContext(FavoriteMealsContext);
+  const headerButtonPressHandler = (meal: Meal) => {
+    if (favoriteMeals.includes(meal)) {
+      removeFavorites(meal);
+    } else {
+      addFavorites(meal);
+    }
   };
 
   useEffect(() => {
@@ -27,8 +31,9 @@ const MealDetailScreen = () => {
         return (
           <IconButton
             icon="star"
-            color={isButtonClicked ? 'yellow' : 'white'}
-            handleOnPress={headerButtonPressHandler}
+            color={favoriteMeals.includes(meal) ? 'yellow' : 'white'}
+            item={meal}
+            handleOnPress={(meal: Meal) => headerButtonPressHandler(meal)}
           />
         );
       },
