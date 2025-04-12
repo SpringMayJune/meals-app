@@ -10,8 +10,10 @@ import MealDetailScreen from './screen/MealDetailScreen';
 import { Meal } from './models/Meal';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { Ionicons } from '@expo/vector-icons';
-import { FavoriteMealsContextProvider } from './contexts/FavoriteMealsContext';
+// import { FavoriteMealsContextProvider } from './store/contexts/FavoriteMealsContext';
 import FavoritesScreen from './screen/FavoritesScreen';
+import { Provider } from 'react-redux';
+import { store } from './store/redux/store';
 
 export type RootStackParamList = {
   Categories: undefined;
@@ -65,7 +67,8 @@ export default function App() {
   return (
     <NavigationContainer>
       <StatusBar style="light"></StatusBar>
-      <FavoriteMealsContextProvider>
+      <Provider store={store}>
+        {/* <FavoriteMealsContextProvider> */}
         <Stack.Navigator
           screenOptions={{
             headerStyle: { backgroundColor: '#351401' },
@@ -99,7 +102,8 @@ export default function App() {
             }}
           />
         </Stack.Navigator>
-      </FavoriteMealsContextProvider>
+      </Provider>
+      {/* </FavoriteMealsContextProvider> */}
     </NavigationContainer>
   );
 }

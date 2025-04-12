@@ -1,5 +1,5 @@
 import { createContext, ReactNode, useEffect, useState } from 'react';
-import { Meal } from '../models/Meal';
+import { Meal } from '../../models/Meal';
 
 export type FavoriteMealsContextType = {
   favoriteMeals: Meal[];

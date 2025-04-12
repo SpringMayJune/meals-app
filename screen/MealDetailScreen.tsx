@@ -8,7 +8,10 @@ import Label from '../components/ui/Label';
 import MealDetails from '../components/MealDetails';
 import Subtitle from '../components/ui/Subtitle';
 import IconButton from '../components/IconButton';
-import { FavoriteMealsContext } from '../contexts/FavoriteMealsContext';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../store/redux/store';
+import { removeFavoriteMeal, setFavoriteMeals } from '../components/context/favoriteMeals';
+// import { FavoriteMealsContext } from '../store/contexts/FavoriteMealsContext';
 
 type MealDetailScreenRouteProp = RouteProp<RootStackParamList, 'MealDetailScreen'>;
 type NavigationProp = StackNavigationProp<RootStackParamList, 'MealDetailScreen'>;
@@ -16,12 +19,16 @@ const MealDetailScreen = () => {
   const route = useRoute<MealDetailScreenRouteProp>();
   const navigation = useNavigation<NavigationProp>();
   const { meal } = route.params;
-  const { favoriteMeals, addFavorites, removeFavorites } = useContext(FavoriteMealsContext);
+  const dispatch = useDispatch<AppDispatch>();
+  // const { favoriteMeals, addFavorites, removeFavorites } = useContext(FavoriteMealsContext);
+  const { favoriteMeals } = useSelector((store: RootState) => store.favoriteMeals);
   const headerButtonPressHandler = (meal: Meal) => {
     if (favoriteMeals.includes(meal)) {
-      removeFavorites(meal);
+      dispatch(removeFavoriteMeal(meal));
+      // removeFavorites(meal);
     } else {
-      addFavorites(meal);
+      dispatch(setFavoriteMeals(meal));
+      // addFavorites(meal);
     }
   };
 

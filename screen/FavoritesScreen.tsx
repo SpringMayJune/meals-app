@@ -1,16 +1,19 @@
 import { useContext } from 'react';
 import { View, FlatList, ListRenderItemInfo, StyleSheet, Text } from 'react-native';
-import { FavoriteMealsContext } from '../contexts/FavoriteMealsContext';
+// import { FavoriteMealsContext } from '../store/contexts/FavoriteMealsContext';
 import MealList from '../components/MealList';
 import { Meal } from '../models/Meal';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../App';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store/redux/store';
 
 type NavigationProp = StackNavigationProp<RootStackParamList, 'MealDetailScreen'>;
 
 const FavoritesScreen = () => {
-  const { favoriteMeals } = useContext(FavoriteMealsContext);
+  // const { favoriteMeals } = useContext(FavoriteMealsContext);
+  const { favoriteMeals } = useSelector((store: RootState) => store.favoriteMeals);
   const navigation = useNavigation<NavigationProp>();
 
   const onPressHandler = (item: Meal) => {
